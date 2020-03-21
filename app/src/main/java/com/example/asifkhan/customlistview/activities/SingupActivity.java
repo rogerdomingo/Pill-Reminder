@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +16,7 @@ import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
 import com.example.asifkhan.customlistview.models.User;
 
 public class SingupActivity extends AppCompatActivity {
-    //private static final String TAG = "SignupActivity";
+    private static final String TAG = "SignupActivity";
 
     AppCompatButton singupButton;
     EditText textName;
@@ -23,7 +24,7 @@ public class SingupActivity extends AppCompatActivity {
     EditText textPassword;
     TextView linkToLogin;
 
-    //private SQLiteDBHelper db;
+    private SQLiteDBHelper db;
 
 
     @Override
@@ -31,7 +32,7 @@ public class SingupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
 
-        //db = new SQLiteDBHelper(this);
+        db = new SQLiteDBHelper(this);
 
         singupButton = (AppCompatButton)findViewById(R.id.btn_signup);
         textName = (EditText)findViewById(R.id.input_name);
@@ -56,25 +57,25 @@ public class SingupActivity extends AppCompatActivity {
     }
 
     private void singup() {
-
         if (!validate()) {
-            //onSingupFailed();
+            onSingupFailed();
             return;
         }
-        /*else {
+        else {
             if(existsUsernameWithThisEmail(textEmail.getText().toString())) {
                 Toast.makeText(getBaseContext(), "The email is already registered", Toast.LENGTH_LONG).show();
             }
             else {
+                Log.v(TAG, "Else");
                 User user = new User(textName.getText().toString(), textEmail.getText().toString(), textPassword.getText().toString(), null);
                 registerUser(user);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivityForResult(intent, 0);
                 Toast.makeText(getBaseContext(), "SingUp Completed", Toast.LENGTH_LONG).show();
             }
-        }*/
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(intent, 0);
+        }
+        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        //startActivityForResult(intent, 0);
 
     }
 
@@ -117,13 +118,14 @@ public class SingupActivity extends AppCompatActivity {
     }
 
     public boolean existsUsernameWithThisEmail(String email) {
-        //User user = db.getPlayer(email);
-        //if(user.getId() != null) return true;
-        //else return false;
-        return true;
+        Log.v(TAG, "existsUsernameWithThisEmail: " + email);
+        User user = db.getUser(email);
+        Log.v(TAG, "existsUsernameWithThisEmail: " + user.getName());
+        if(user.getId() != null) return true;
+        else return false;
     }
 
     private void registerUser(User user) {
-        //db.addUser(user);
+        db.addUser(user);
     }
 }

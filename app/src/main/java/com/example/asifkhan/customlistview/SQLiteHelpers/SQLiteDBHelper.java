@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.asifkhan.customlistview.models.User;
 
@@ -56,29 +57,23 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteOneUser(User user) {
-        // Get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_USERS, "id = ?", new String[] { String.valueOf(user.getId()) });
-        db.close();
-    }
-
-    public User getPlayer(String email) {
+    public User getUser(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, // a. table
-                COLUMNS, // b. column names
-                " email = ?", // c. selections
-                new String[] { String.valueOf(email) }, // d. selections args
-                null, // e. group by
-                null, // f. having
-                null, // g. order by
-                null); // h. limit
+        String sql = "SELECT * FROM Users WHERE email = '" + email +"';";
+        Cursor cursor = db.rawQuery(sql, null);
+        User user = new User();
+        Log.v("DB", cursor.toString());
+        // Read data, I simplify cursor in one line
+        if (cursor.moveToFirst()) {
 
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        User user = new User(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), null);
-
+            // Get imageData in byte[]. Easy, right?
+            user.setId(cursor.getString(cursor.getColumnIndex(KEY_ID)));
+            user.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+            user.setEmail(cursor.getString(cursor.getColumnIndex(KEY_EMAIL)));
+            user.setPassword(cursor.getString(cursor.getColumnIndex(KEY_PASSWORD)));
+        }
+        cursor.close();
+        db.close();
         return user;
     }
 }

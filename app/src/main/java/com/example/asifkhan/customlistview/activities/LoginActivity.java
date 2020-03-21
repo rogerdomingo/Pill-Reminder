@@ -22,13 +22,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText textPassword;
     TextView linkToSingup;
 
-    //private SQLiteDBHelper db;
+    private SQLiteDBHelper db;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        db = new SQLiteDBHelper(this);
 
         loginButton = (AppCompatButton)findViewById(R.id.btn_login);
         textEmail = (EditText)findViewById(R.id.input_email);
@@ -61,17 +63,17 @@ public class LoginActivity extends AppCompatActivity {
             onLoginFailed();
             return;
         }
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(intent, 0);
-        /*else {
-            User user = db.getPlayer(textEmail.getText().toString());
+        else {
+            User user = db.getUser(textEmail.getText().toString());
             if(user.getId() == null) Toast.makeText(getBaseContext(), "User not exits", Toast.LENGTH_LONG).show();
-            else if(user.getPassword() != textPassword.getText().toString()) Toast.makeText(getBaseContext(), "Wrong password", Toast.LENGTH_LONG).show();
+            else if(!user.getPassword().equals(textPassword.getText().toString())) Toast.makeText(getBaseContext(), "Wrong password: ", Toast.LENGTH_LONG).show();
             else {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivityForResult(intent, 0);
             }
-        }*/
+        }
+        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        //startActivityForResult(intent, 0);
 
     }
 
