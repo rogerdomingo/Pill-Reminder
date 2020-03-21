@@ -47,9 +47,11 @@ public class CustomListAdapter extends BaseAdapter implements View.OnClickListen
         view=layoutInflater.inflate(R.layout.custom_list_view_layout,null);
 
         Pill pill = pillArrayList.get(i);
+        TextView photo=(TextView)view.findViewById(R.id.photo);
         TextView name=(TextView)view.findViewById(R.id.name);
         TextView profession=(TextView)view.findViewById(R.id.profession);
 
+        photo.setText("" + pill.getName().charAt(0));
         name.setText(pill.getName());
         profession.setText(pill.getName());
         return view;
