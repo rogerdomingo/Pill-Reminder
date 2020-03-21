@@ -1,5 +1,6 @@
 package com.example.asifkhan.customlistview.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -56,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MainActivity.this, "Name : " + names[i] + "\n Profession : " + professions[i], Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), ViewPillActivity.class);
+                intent.putExtra("PILL_NAME", names[i]);
+                intent.putExtra("PILL_DATE", professions[i]);
+                startActivityForResult(intent, 0);
             }
         });
     }
