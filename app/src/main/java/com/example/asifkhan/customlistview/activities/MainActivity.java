@@ -1,10 +1,12 @@
 package com.example.asifkhan.customlistview.activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.asifkhan.customlistview.R;
+import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
 import com.example.asifkhan.customlistview.adapters.CustomListAdapter;
 import com.example.asifkhan.customlistview.models.Pill;
+import com.example.asifkhan.customlistview.models.User;
 import com.example.asifkhan.customlistview.models.UserInfo;
 
 import java.util.ArrayList;
@@ -22,24 +26,40 @@ public class MainActivity extends AppCompatActivity {
     //private ArrayList<UserInfo> userInfos;
     private CustomListAdapter customListAdapter;
     private ListView customListView;
-    private Pill pill1 = new Pill("Pill1");
+    /*private Pill pill1 = new Pill("Pill1");
     private Pill pill2 = new Pill("Pill2");
-    private Pill pill3 = new Pill("Pill3");
+    private Pill pill3 = new Pill("Pill3");*/
     private ArrayList<Pill> arrayListPills;
+    private User user;
+
+    private SQLiteDBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        db = new SQLiteDBHelper(this);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        user = db.getUser(userEmail);
+
+        arrayListPills = new ArrayList<>();
+        arrayListPills = db.getAllPills(user);
+
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         customListView=(ListView)findViewById(R.id.custom_list_view);
 
-        arrayListPills = new ArrayList<>();
-        arrayListPills.add(pill1);
-        arrayListPills.add(pill2);
-        arrayListPills.add(pill3);
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddPill.class);
+                intent.putExtra("USER_EMAIL", user.getEmail());
+                startActivityForResult(intent, 0);
+            }
+        });
 
-        customListAdapter=new CustomListAdapter(arrayListPills,this);
+        customListAdapter = new CustomListAdapter(arrayListPills,this);
         customListView.setAdapter(customListAdapter);
 
         customListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +72,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 0);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v("Taaaaaag", "Tag");
+        arrayListPills = new ArrayList<>();
+        arrayListPills = db.getAllPills(user);
+
+        customListAdapter = new CustomListAdapter(arrayListPills,this);
+        customListView.setAdapter(customListAdapter);
+        customListAdapter.notifyDataSetChanged();
+
     }
 
     @Override

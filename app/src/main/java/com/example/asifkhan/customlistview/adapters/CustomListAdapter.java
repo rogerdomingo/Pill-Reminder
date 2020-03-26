@@ -53,7 +53,7 @@ public class CustomListAdapter extends BaseAdapter implements View.OnClickListen
 
         photo.setText("" + pill.getName().charAt(0));
         name.setText(pill.getName());
-        profession.setText(pill.getName());
+        profession.setText(pill.getDate());
         return view;
     }
 

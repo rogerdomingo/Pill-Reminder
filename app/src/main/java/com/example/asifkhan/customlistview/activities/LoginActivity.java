@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.asifkhan.customlistview.R;
 import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
+import com.example.asifkhan.customlistview.models.Pill;
 import com.example.asifkhan.customlistview.models.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView linkToSingup;
 
     private SQLiteDBHelper db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             else if(!user.getPassword().equals(textPassword.getText().toString())) Toast.makeText(getBaseContext(), "Wrong password: ", Toast.LENGTH_LONG).show();
             else {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("USER_EMAIL", user.getEmail());
                 startActivityForResult(intent, 0);
             }
         }

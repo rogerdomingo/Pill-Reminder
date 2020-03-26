@@ -70,6 +70,7 @@ public class SingupActivity extends AppCompatActivity {
                 User user = new User(textName.getText().toString(), textEmail.getText().toString(), textPassword.getText().toString(), null);
                 registerUser(user);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("USER_EMAIL", user.getEmail());
                 startActivityForResult(intent, 0);
                 Toast.makeText(getBaseContext(), "SingUp Completed", Toast.LENGTH_LONG).show();
             }
