@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 
 <RelativeLayout
+=======
+<LinearLayout
+>>>>>>> master
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,8 +15,12 @@
 
     <include android:id="@+id/toolbar" layout="@layout/custom_toolbar_layout"/>
 
+<<<<<<< HEAD
     <FrameLayout
         android:id="@+id/container"
+=======
+    <android.support.design.widget.CoordinatorLayout
+>>>>>>> master
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp"
@@ -23,6 +31,7 @@
             android:elevation="3dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+<<<<<<< HEAD
 
             <ListView
                 android:id="@+id/custom_list_view"
@@ -50,3 +59,24 @@
 
 </RelativeLayout>
 
+=======
+
+            <ListView
+                android:id="@+id/custom_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@drawable/baseline_add_black_18dp"
+            android:layout_margin="25dp" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>
+>>>>>>> master
