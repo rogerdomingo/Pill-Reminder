@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.asifkhan.customlistview">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,16 +11,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity" android:screenOrientation="portrait">
+        <activity android:name=".activities.MapActivity"></activity>
+        <activity android:name=".activities.NewPillActivity" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.SingupActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.MainActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.ViewPillActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.SignupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ViewPillActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

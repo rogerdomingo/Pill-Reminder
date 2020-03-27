@@ -2,6 +2,7 @@ package com.example.asifkhan.customlistview.models;
 
 public class Pill {
     private String name;
+    private String date;
 
     public Pill() {
     }

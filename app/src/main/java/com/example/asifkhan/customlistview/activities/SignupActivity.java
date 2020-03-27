@@ -15,7 +15,7 @@ import com.example.asifkhan.customlistview.R;
 import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
 import com.example.asifkhan.customlistview.models.User;
 
-public class SingupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     AppCompatButton singupButton;
@@ -30,7 +30,7 @@ public class SingupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singup);
+        setContentView(R.layout.activity_signup);
 
         db = new SQLiteDBHelper(this);
 

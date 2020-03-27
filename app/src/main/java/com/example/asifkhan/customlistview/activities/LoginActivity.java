@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SingupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, 0);
 
             }
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             User user = db.getUser(textEmail.getText().toString());
-            if(user.getId() == null) Toast.makeText(getBaseContext(), "User not exits", Toast.LENGTH_LONG).show();
+            if(user.getId() == null) Toast.makeText(getBaseContext(), "User does not exist", Toast.LENGTH_LONG).show();
             else if(!user.getPassword().equals(textPassword.getText().toString())) Toast.makeText(getBaseContext(), "Wrong password: ", Toast.LENGTH_LONG).show();
             else {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -84,14 +84,14 @@ public class LoginActivity extends AppCompatActivity {
         String password = textPassword.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            textEmail.setError("enter a valid email address");
+            textEmail.setError("Enter a valid email address");
             valid = false;
         } else {
             textEmail.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            textPassword.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 15) {
+            textPassword.setError("Between 4 and 15 alphanumeric characters");
             valid = false;
         } else {
             textPassword.setError(null);
