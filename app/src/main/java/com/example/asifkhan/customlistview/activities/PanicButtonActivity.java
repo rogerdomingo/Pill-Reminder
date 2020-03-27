@@ -1,9 +1,12 @@
 package com.example.asifkhan.customlistview.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -24,30 +27,30 @@ public class PanicButtonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_panic_button);
 
         // Initialize and assign variable
-        mBottomNavigationView=(BottomNavigationView) findViewById(R.id.bottomNavigation);
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         // Set Emergency Selected
         mBottomNavigationView.setSelectedItemId(R.id.menu_panic_btn);
         // Perform item selected listener
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.menu_panic_btn:
                         return true;
                     case R.id.menu_home:
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.menu_tracker:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
             }
         });
 
-        panicButton = (AppCompatButton)findViewById(R.id.panic_btn);
+        panicButton = (AppCompatButton) findViewById(R.id.panic_btn);
         panicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +58,16 @@ public class PanicButtonActivity extends AppCompatActivity {
                 String s = "tel:" + phone_number;
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(s));
+                if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
                 startActivity(intent);
             }
         });
