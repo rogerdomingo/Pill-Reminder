@@ -1,15 +1,9 @@
 package com.example.asifkhan.customlistview.activities;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
-=======
-import android.support.design.widget.FloatingActionButton;
->>>>>>> master
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -26,7 +20,6 @@ import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
 import com.example.asifkhan.customlistview.adapters.CustomListAdapter;
 import com.example.asifkhan.customlistview.models.Pill;
 import com.example.asifkhan.customlistview.models.User;
-import com.example.asifkhan.customlistview.models.UserInfo;
 
 import java.util.ArrayList;
 
@@ -34,15 +27,10 @@ public class MainActivity extends AppCompatActivity {
     //private ArrayList<UserInfo> userInfos;
     private CustomListAdapter customListAdapter;
     private ListView customListView;
-<<<<<<< HEAD
-    private FloatingActionButton floatingActionButton;
     private BottomNavigationView mBottomNavigationView;
     private Pill pill1 = new Pill("Pill1");
-=======
-    /*private Pill pill1 = new Pill("Pill1");
->>>>>>> master
-    private Pill pill2 = new Pill("Pill2");
-    private Pill pill3 = new Pill("Pill3");*/
+
+
     private ArrayList<Pill> arrayListPills;
     private User user;
 
@@ -63,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
         customListView=(ListView)findViewById(R.id.custom_list_view);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.add_pill_btn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,15 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("PILL_NAME", arrayListPills.get(i).getName());
                 intent.putExtra("PILL_DATE", arrayListPills.get(i).getName());
                 startActivityForResult(intent, 0);
-            }
-        });
-
-        floatingActionButton=(FloatingActionButton)findViewById(R.id.add_pill_btn);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), NewPillActivity.class);
-                startActivity(intent);
             }
         });
 
