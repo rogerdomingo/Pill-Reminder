@@ -8,16 +8,25 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.asifkhan.customlistview.R;
+import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
+import com.example.asifkhan.customlistview.models.User;
 
 public class MapActivity extends AppCompatActivity {
 
 
     private BottomNavigationView mBottomNavigationView;
 
+    private User user;
+    private SQLiteDBHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        db = new SQLiteDBHelper(this);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        user = db.getUser(userEmail);
 
         // Initialize and assign variable
         mBottomNavigationView=(BottomNavigationView) findViewById(R.id.bottomNavigation);
@@ -29,11 +38,15 @@ public class MapActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.menu_panic_btn:
-                        startActivity(new Intent(getApplicationContext(), PanicButtonActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), PanicButtonActivity.class);
+                        intent.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent, 0);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.menu_home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent2 = new Intent(getApplicationContext(), MainActivity.class);
+                        intent2.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent2, 0);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.menu_tracker:

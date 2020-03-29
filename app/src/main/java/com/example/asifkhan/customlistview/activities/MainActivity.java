@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Pill> arrayListPills;
     private User user;
-
     private SQLiteDBHelper db;
 
     @Override
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddPill.class);
+                Intent intent = new Intent(getApplicationContext(), AddPillActivity.class);
                 intent.putExtra("USER_EMAIL", user.getEmail());
                 startActivityForResult(intent, 0);
             }
@@ -85,13 +84,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.menu_panic_btn:
-                        startActivity(new Intent(getApplicationContext(), PanicButtonActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), PanicButtonActivity.class);
+                        intent.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent, 0);
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.menu_home:
                         return true;
                     case R.id.menu_tracker:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
+                        Intent intent2 = new Intent(getApplicationContext(), MapActivity.class);
+                        intent2.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent2, 0);
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -105,8 +108,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.v("Taaaaaag", "Tag");
+
+        db = new SQLiteDBHelper(this);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        user = db.getUser(userEmail);
+
         arrayListPills = new ArrayList<>();
         arrayListPills = db.getAllPills(user);
+        //arrayListPills.sort();
 
         customListAdapter = new CustomListAdapter(arrayListPills,this);
         customListView.setAdapter(customListAdapter);

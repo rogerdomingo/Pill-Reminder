@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -11,6 +12,24 @@
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
+
+        <ImageView
+            android:id="@+id/app_logo"
+            android:layout_width="171dp"
+            android:layout_height="204dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            app:srcCompat="@drawable/pills_logo" />
+
+        <TextView android:id="@+id/app_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="PILL REMINDER"
+            android:textSize="25dip"
+            android:textStyle="bold"
+            android:textColor="@color/primaryDarkColor"/>
 
         <!-- Email Label -->
         <android.support.design.widget.TextInputLayout

@@ -39,7 +39,7 @@
             android:layout_gravity="center_horizontal"
             android:text="The tracker mode is still not available in this version of Pill Reminder. We are working on it so that you can experience it in the next version."
             android:textColor="@color/gray3"
-            android:textSize="18dp"
+            android:textSize="17dp"
             android:textAlignment="center"/>
 
         <ImageView

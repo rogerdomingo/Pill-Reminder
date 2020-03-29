@@ -18,7 +18,7 @@ import com.example.asifkhan.customlistview.models.User;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    AppCompatButton singupButton;
+    AppCompatButton signupButton;
     EditText textName;
     EditText textEmail;
     EditText textPassword;
@@ -34,17 +34,17 @@ public class SignupActivity extends AppCompatActivity {
 
         db = new SQLiteDBHelper(this);
 
-        singupButton = (AppCompatButton)findViewById(R.id.btn_signup);
+        signupButton = (AppCompatButton)findViewById(R.id.btn_signup);
         textName = (EditText)findViewById(R.id.input_name);
         textEmail = (EditText)findViewById(R.id.input_email);
         textPassword = (EditText)findViewById(R.id.input_password);
         linkToLogin = (TextView)findViewById(R.id.link_login);
 
-        singupButton.setOnClickListener(new View.OnClickListener() {
+        signupButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                singup();
+                signUp();
             }
         });
 
@@ -56,9 +56,9 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    private void singup() {
+    private void signUp() {
         if (!validate()) {
-            onSingupFailed();
+            onSignUpFailed();
             return;
         }
         else {
@@ -72,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("USER_EMAIL", user.getEmail());
                 startActivityForResult(intent, 0);
-                Toast.makeText(getBaseContext(), "SingUp Completed", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "SignUp Completed", Toast.LENGTH_LONG).show();
             }
         }
         //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -111,11 +111,11 @@ public class SignupActivity extends AppCompatActivity {
         return valid;
     }
 
-    public void onSingupFailed() {
+    public void onSignUpFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         textPassword.setText("");
 
-        singupButton.setEnabled(true);
+        signupButton.setEnabled(true);
     }
 
     public boolean existsUsernameWithThisEmail(String email) {

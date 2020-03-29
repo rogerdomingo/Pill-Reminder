@@ -67,7 +67,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         values.put(KEY_USER_PASSWORD, user.getPassword());
         // insert
         db.insert(TABLE_USERS,null, values);
-        //Important! Sempre tancar la connexó a la DB
         db.close();
     }
 
@@ -79,7 +78,6 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         values.put(KEY_PILL_DATE, pill.getDate());
         // insert
         db.insert(TABLE_PILLS,null, values);
-        //Important! Sempre tancar la connexó a la DB
         db.close();
     }
 

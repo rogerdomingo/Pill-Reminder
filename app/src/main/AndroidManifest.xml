@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.NewPillActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait">
@@ -25,9 +24,11 @@
         <activity android:name=".activities.SignupActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.ViewPillActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".activities.AddPill" android:screenOrientation="portrait"/>
+        <activity android:name=".activities.AddPillActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activities.PanicButtonActivity" android:screenOrientation="portrait"/>
         <activity android:name=".activities.MapActivity" android:screenOrientation="portrait"/>
     </application>
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 </manifest>

@@ -7,24 +7,36 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.asifkhan.customlistview.R;
+import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
+import com.example.asifkhan.customlistview.models.User;
 
 
 public class PanicButtonActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CALL = 1;
     private AppCompatButton panicButton;
     private BottomNavigationView mBottomNavigationView;
+
+    private User user;
+    private SQLiteDBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panic_button);
+
+        db = new SQLiteDBHelper(this);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        user = db.getUser(userEmail);
 
         // Initialize and assign variable
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
@@ -38,12 +50,16 @@ public class PanicButtonActivity extends AppCompatActivity {
                     case R.id.menu_panic_btn:
                         return true;
                     case R.id.menu_home:
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        overridePendingTransition(0, 0);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent, 0);
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.menu_tracker:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        overridePendingTransition(0, 0);
+                        Intent intent2 = new Intent(getApplicationContext(), MapActivity.class);
+                        intent2.putExtra("USER_EMAIL", user.getEmail());
+                        startActivityForResult(intent2, 0);
+                        overridePendingTransition(0,0);
                         return true;
                 }
                 return false;
@@ -54,24 +70,31 @@ public class PanicButtonActivity extends AppCompatActivity {
         panicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone_number = "628153187";
-                String s = "tel:" + phone_number;
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse(s));
-                if (ActivityCompat.checkSelfPermission(view.getContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                startActivity(intent);
+                makePhoneCall();
             }
         });
-
     }
 
+    private void makePhoneCall() {
+        String phone_number = "+34 628153187";
+
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PanicButtonActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+        } else {
+            String dial = "tel:" + phone_number;
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == REQUEST_CALL) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                makePhoneCall();
+            }
+        } else {
+            Toast.makeText(this, "Permission DENIED", Toast.LENGTH_LONG).show();
+        }
+    }
 }

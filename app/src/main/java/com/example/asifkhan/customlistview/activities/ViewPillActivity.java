@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.asifkhan.customlistview.R;
 import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
 import com.example.asifkhan.customlistview.models.Pill;
+import com.example.asifkhan.customlistview.models.User;
 
 public class ViewPillActivity extends AppCompatActivity {
 
@@ -18,8 +19,10 @@ public class ViewPillActivity extends AppCompatActivity {
     EditText textName;
     EditText textDate;
     AppCompatButton deleteButton;
+    AppCompatButton cancelButton;
 
     private SQLiteDBHelper db;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +30,13 @@ public class ViewPillActivity extends AppCompatActivity {
         setContentView(R.layout.activity_viewpill);
 
         db = new SQLiteDBHelper(this);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        user = db.getUser(userEmail);
 
         textName = (EditText)findViewById(R.id.pill_name);
         textDate = (EditText)findViewById(R.id.pill_date);
         deleteButton = (AppCompatButton)findViewById(R.id.btn_delete);
+        cancelButton = (AppCompatButton)findViewById(R.id.btn_cancel);
 
         String pillName = getIntent().getStringExtra("PILL_NAME");
         String pillDate = getIntent().getStringExtra("PILL_DATE");
@@ -44,6 +50,14 @@ public class ViewPillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Boolean deleted = db.deletePill(textName.getText().toString());
                 if (deleted) ViewPillActivity.super.onBackPressed();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

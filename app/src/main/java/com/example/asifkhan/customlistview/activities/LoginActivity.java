@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.asifkhan.customlistview.R;
 import com.example.asifkhan.customlistview.SQLiteHelpers.SQLiteDBHelper;
-import com.example.asifkhan.customlistview.models.Pill;
 import com.example.asifkhan.customlistview.models.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatButton loginButton;
     EditText textEmail;
     EditText textPassword;
-    TextView linkToSingup;
+    TextView linkToSignUp;
 
     private SQLiteDBHelper db;
 
@@ -35,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = (AppCompatButton)findViewById(R.id.btn_login);
         textEmail = (EditText)findViewById(R.id.input_email);
         textPassword = (EditText)findViewById(R.id.input_password);
-        linkToSingup = (TextView)findViewById(R.id.link_signup);
+        linkToSignUp = (TextView)findViewById(R.id.link_signup);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -45,11 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        linkToSingup.setOnClickListener(new View.OnClickListener() {
+        linkToSignUp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // Start the Signup activity
+                // Start the SignUp activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
                 startActivityForResult(intent, 0);
 
